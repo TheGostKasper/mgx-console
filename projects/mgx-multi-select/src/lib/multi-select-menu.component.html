@@ -1,0 +1,143 @@
+<div
+  fxLayout="row"
+  fxFlex
+  fxLayoutAlign="start center"
+  class="u-width-100 u-bg-gray-primary100 container u-position-relative"
+>
+  <div
+    class="u-width-100 u-min-height-xtiny"
+    fxLayoutAlign="center center"
+    (click)="select.open()"
+    *ngIf="showLabels"
+  >
+    <mat-chip-list aria-label="Fish selection" class="u-width-100">
+      <mat-chip
+        class="u-caption-2 u-bg-gray-primary300"
+        *ngFor="let item of selectedItems"
+        [selectable]="true"
+        [removable]="true"
+        (removed)="remove(item)"
+        [disabled]="disabled"
+      >
+        {{ item.name || item }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <button
+    mat-button
+    class="btnSelectCtrl"
+    (click)="select.open()"
+    *ngIf="!showLabels"
+  >
+    <span class="u-margin-right-small">{{ caption }}</span>
+    <span
+      class="notification u-text-gray-primary0"
+      *ngIf="!!selectedItems?.length"
+      >{{ selectedItems.length }}</span
+    >
+  </button>
+
+  <mat-select
+    [multiple]="isMultipleSelect"
+    disableOptionCentering
+    #select
+    [formControl]="itemsSelected"
+    (openedChange)="openedChange($event)"
+  >
+    <mat-select-trigger> </mat-select-trigger>
+    <div class="select-container">
+      <div
+        class="u-border-bottom u-border-gray-primary300 search-container"
+        *ngIf="isSearchable"
+      >
+        <div
+          fxLayout="row"
+          fxFlex
+          fxLayoutAlign="start center"
+          class="u-bg-gray-primary100 u-padding-tiny"
+        >
+          <mat-icon class="u-text-gray-primary500" *ngIf="!searchItems.value"
+            >search</mat-icon
+          >
+          <input
+            class="u-margin-left-small no-border"
+            autocomplete="off"
+            placeholder="Search for {{ caption }}"
+            aria-label="Search"
+            matInput
+            [formControl]="searchItems"
+            (keydown)="handleInput($event)"
+          />
+          <mat-icon
+            class="u-text-gray-primary500 pointer"
+            [matTooltip]="'Clear Search'"
+            *ngIf="!!searchItems.value"
+            (click)="clearSearch()"
+            >close</mat-icon
+          >
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div *ngIf="showSelectAll && isMultipleSelect">
+        <mat-option
+          class="option"
+          (onSelectionChange)="selectAllChange($event)"
+          [value]="isSelectAll"
+        >
+          Select All</mat-option
+        >
+        <mat-divider></mat-divider>
+      </div>
+
+      <div class="u-text-right">
+        <button
+          class=""
+          [disabled]="!selectedItems?.length"
+          (click)="clearSelection()"
+          mat-button
+        >
+          Clear Selection
+        </button>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <mat-optgroup *ngIf="items.length === 0 && savedItems.length === 0">
+        <div>No results found!</div>
+      </mat-optgroup>
+      <mat-option
+        *ngFor="let item of savedItems"
+        [value]="item"
+        class="option"
+        (onSelectionChange)="selectionChange($event, item)"
+        [ngClass]="{ capitalize: capitalize }"
+        checked="true"
+      >
+        <ng-container
+          [ngTemplateOutlet]="optionTemplateRef || defaultTemplate"
+          [ngTemplateOutletContext]="{ $implicit: item }"
+        >
+        </ng-container>
+        <ng-template #defaultTemplate let-item>{{ item.name }}</ng-template>
+      </mat-option>
+      <mat-divider *ngIf="savedItems.length !== 0"></mat-divider>
+      <mat-option
+        *ngFor="let item of items"
+        [value]="item"
+        class="option"
+        (onSelectionChange)="selectionChange($event, item)"
+        [ngClass]="{ capitalize: capitalize }"
+      >
+        <ng-container
+          [ngTemplateOutlet]="optionTemplateRef || defaultTemplate"
+          [ngTemplateOutletContext]="{ $implicit: item }"
+        >
+        </ng-container>
+        <ng-template #defaultTemplate let-item>{{ item.name }}</ng-template>
+      </mat-option>
+    </div>
+  </mat-select>
+</div>
