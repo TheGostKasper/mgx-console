@@ -23,6 +23,7 @@ export class LoadingService<T> {
   loading = false;
   error = false;
   noData = false;
+  overlayLoading?: boolean;
   data?: T;
   data$!: Observable<T>;
   payLoad?: IPayload = {

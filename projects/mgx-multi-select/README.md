@@ -1,6 +1,6 @@
 # MgxMultiSelect
 
-Angular multiselect dropdown component that easy to use  
+Angular multiselect dropdown component that easy to use  [github page](https://github.com/TheGostKasper/mgx-console/tree/master/projects/mgx-multi-select)
 
 ## Dependencies
 
