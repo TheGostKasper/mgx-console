@@ -61,7 +61,7 @@ In your template, use the component directive:
 | --- | --- | --- |
 | `caption` | Placeholder for the dropdown | empty |
 | `items` | Array of {id:string,name:string} that defines options | []
-| `filtereditems` | array of filteredItems  | []
+| `filtereditems` | array of **filteredIds** `string ids`   | []
 | `capitalize` | controls text-transformation in case you want to capitalize options | false
 | `showLabels` | Controls if you want to show selected items on a chipList input| false
 | `isSearchable` | Control search input visibility | true

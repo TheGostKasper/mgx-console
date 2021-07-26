@@ -27,7 +27,7 @@ export interface IMenuItem {
 export class MgxMultiSelectComponent implements OnInit, OnChanges, OnDestroy {
   @Input() caption: string = '';
   @Input() items: IMenuItem[] = [];
-  @Input() filtereditems: IMenuItem[] = [];
+  @Input() filtereditems: string[] = [];
   @Input() capitalize = false;
   @Input() showLabels = false;
   @Input() isSearchable = true;
@@ -77,6 +77,40 @@ export class MgxMultiSelectComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe();
     this.subs$?.add(search$);
   }
+  private setFilterChangeItems(items: IMenuItem[] | IMenuItem) {
+    this.itemsSelected.setValue(items);
+    this.filterChange.emit({ value: items });
+  }
+  private applySingleSelection(item: IMenuItem): void {
+    if (item.id === this.selectedItems[0]?.id) return;
+    else {
+      this.selectedItems = [item];
+      this.setFilterChangeItems(this.selectedItems);
+    }
+  }
+  private applyMultiSelect(item: any) {
+    if (this.selectedItems.filter((e) => e.id === item.id)[0]) {
+      this.selectedItems = this.selectedItems.filter((e) => e.id != item.id);
+    } else {
+      this.selectedItems.push(item);
+    }
+    this.setFilterChangeItems(this.selectedItems);
+  }
+  private setItemsSelected() {
+    this.selectedItems =
+      this.filtereditems?.length > 0
+        ? this.getMappedItems(this.filtereditems)
+        : [];
+    const itemToSet = !!this.isMultipleSelect
+      ? this.selectedItems
+      : this.selectedItems[0];
+    this.itemsSelected.setValue(itemToSet);
+  }
+  private getMappedItems(ids: Array<any>) {
+    const items = this.globalItems.filter((e) => ids.includes(e.id));
+    return items;
+  }
+
   ngOnDestroy(): void {
     this.subs$?.unsubscribe();
   }
@@ -87,24 +121,13 @@ export class MgxMultiSelectComponent implements OnInit, OnChanges, OnDestroy {
       !!filtereditems.previousValue &&
       filtereditems.currentValue != filtereditems.previousValue
     ) {
-      this.selectedItems =
-        this.filtereditems?.length > 0
-          ? this.getMappedItems(this.filtereditems)
-          : [];
-      this.itemsSelected.setValue(this.selectedItems);
+      this.setItemsSelected();
     }
   }
 
   ngOnInit(): void {
     this.globalItems = this.items;
-    this.selectedItems =
-      this.filtereditems?.length > 0
-        ? this.getMappedItems(this.filtereditems)
-        : [];
-    this.itemsSelected.setValue(this.selectedItems);
-  }
-  getMappedItems(ids: Array<any>) {
-    return this.globalItems.filter((e) => ids.includes(e.id));
+    this.setItemsSelected();
   }
   openedChange(event: boolean) {
     if (!event) {
@@ -130,24 +153,6 @@ export class MgxMultiSelectComponent implements OnInit, OnChanges, OnDestroy {
       this.itemsSelected.setValue(this.selectedItems);
       this.filterChange.emit({ value: this.selectedItems });
     }
-  }
-  private applySingleSelection(item: IMenuItem): void {
-    if (item.id === this.selectedItems[0]?.id) return;
-    else {
-      this.selectedItems = [item];
-      this.itemsSelected.setValue(this.selectedItems);
-      this.filterChange.emit({ value: this.selectedItems });
-    }
-  }
-
-  private applyMultiSelect(item: any) {
-    if (this.selectedItems.filter((e) => e.id === item.id)[0]) {
-      this.selectedItems = this.selectedItems.filter((e) => e.id != item.id);
-    } else {
-      this.selectedItems.push(item);
-    }
-    this.itemsSelected.setValue(this.selectedItems);
-    this.filterChange.emit({ value: this.selectedItems });
   }
 
   remove(item: IMenuItem) {
