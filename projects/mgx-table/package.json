@@ -1,6 +1,6 @@
 {
-  "name": "mgx-loading-and-error",
-  "version": "1.0.3",
+  "name": "mgx-table",
+  "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^12.1.0-",
     "@angular/core": "^12.1.0-"

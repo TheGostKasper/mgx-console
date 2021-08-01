@@ -1,16 +1,18 @@
 <div
-  fxLayout="row"
-  fxFlex
-  fxLayoutAlign="start center"
-  class="u-width-100 u-bg-gray-primary100 container u-position-relative"
+  class="
+    flex flex__row flex__start
+    u-width-100 u-bg-gray-primary100
+    container
+    u-position-relative
+    pointer
+  "
+  (click)="select.open()"
 >
   <div
-    class="u-width-100 u-min-height-xtiny"
-    fxLayoutAlign="center center"
-    (click)="select.open()"
+    class="flex flex__row flex__start u-width-100 u-min-height-input"
     *ngIf="showLabels"
   >
-    <mat-chip-list aria-label="Fish selection" class="u-width-100">
+    <mat-chip-list class="u-width-100">
       <mat-chip
         class="u-caption-2 u-bg-gray-primary300"
         *ngFor="let item of selectedItems"
@@ -24,20 +26,14 @@
       </mat-chip>
     </mat-chip-list>
   </div>
-
-  <button
-    mat-button
-    class="btnSelectCtrl"
-    (click)="select.open()"
-    *ngIf="!showLabels"
-  >
+  <div class="btnSelectCtrl flex flex__row flex__start" *ngIf="!showLabels">
     <span class="u-margin-right-small">{{ caption }}</span>
     <span
       class="notification u-text-gray-primary0"
       *ngIf="!!selectedItems?.length"
       >{{ selectedItems.length }}</span
     >
-  </button>
+  </div>
 
   <mat-select
     [multiple]="isMultipleSelect"
@@ -53,10 +49,7 @@
         *ngIf="isSearchable"
       >
         <div
-          fxLayout="row"
-          fxFlex
-          fxLayoutAlign="start center"
-          class="u-bg-gray-primary100 u-padding-tiny"
+          class=" flex flex__row flex__start u-bg-gray-primary100 u-padding-tiny"
         >
           <mat-icon class="u-text-gray-primary500" *ngIf="!searchItems.value"
             >search</mat-icon

@@ -1,0 +1,22 @@
+<div class="container">
+  <mgx-loading-and-error [loadingErrorConfig]="itemsConfig">
+    <ng-container *ngIf="itemsConfig.data$ | async as items">
+      <mgx-multi-select-menu [items]="items" caption="Standards" (filterChange)="filterChange($event)">
+      </mgx-multi-select-menu>
+    </ng-container>
+  </mgx-loading-and-error>
+</div>
+
+
+<mat-form-field appearance="fill">
+  <mat-label>Toppings</mat-label>
+  <mat-select [formControl]="toppings" multiple>
+    <mat-select-trigger>
+      {{toppings.value ? toppings.value[0] : ''}}
+      <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+        (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+    </mat-select-trigger>
+    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+  </mat-select>
+</mat-form-field>

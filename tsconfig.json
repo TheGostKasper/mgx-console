@@ -17,6 +17,10 @@
       "mgx-multi-select": [
         "dist/mgx-multi-select/mgx-multi-select",
         "dist/mgx-multi-select"
+      ],
+      "mgx-table": [
+        "dist/mgx-table/mgx-table",
+        "dist/mgx-table"
       ]
     },
     "declaration": false,

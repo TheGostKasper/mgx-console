@@ -1,0 +1,63 @@
+<div>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="u-width-100"
+    matSort
+    (matSortChange)="sortData($event)"
+  >
+    <ng-container *ngFor="let row of displayedRows" [matColumnDef]="row.key">
+      <th mat-header-cell *matHeaderCellDef [mat-sort-header]="row.key">
+        {{ row.title }}
+      </th>
+
+      <td mat-cell *matCellDef="let element">
+        <a
+          [routerLink]="row.routeConfig.getRouterLink(element)"
+          [queryParams]="row.routeConfig.getQueryParams(element)"
+          class="pointer"
+          *ngIf="row.isLinkable"
+        >
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="u-text-gray-primary500" *ngIf="!!row.icon"
+              >row.icon</mat-icon
+            >
+            <span *ngIf="!!row.value"> {{ element[row.value] }}</span>
+          </div>
+        </a>
+        <span *ngIf="!row.isLinkable">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="u-text-gray-primary500" *ngIf="!!row.icon"
+              >row.icon</mat-icon
+            >
+            <span *ngIf="!!row.value"> {{ element[row.value] }}</span>
+          </div>
+        </span>
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+      class="u-subtitle-4"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      class="pointer"
+    ></tr>
+  </table>
+
+  <div *ngIf="!responseObj?.count" class="no-data-to-display">
+    There is no data to display
+  </div>
+  <mat-paginator
+    *ngIf="responseObj?.count"
+    [length]="responseObj.count"
+    [pageSizeOptions]="[10, 20, 50]"
+    [pageSize]="pageSize"
+    class="paginator"
+    (page)="paginate($event)"
+  >
+  </mat-paginator>
+</div>

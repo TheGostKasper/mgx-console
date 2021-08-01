@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
@@ -14,14 +13,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MgxMultiSelectComponent } from './mgx-multi-select.component';
 
-
 @NgModule({
   declarations: [MgxMultiSelectComponent],
   imports: [
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
     MatChipsModule,
     MatDividerModule,
     MatIconModule,
@@ -29,7 +26,7 @@ import { MgxMultiSelectComponent } from './mgx-multi-select.component';
     ReactiveFormsModule,
     MatTooltipModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
   ],
   exports: [MgxMultiSelectComponent],
   entryComponents: [MgxMultiSelectComponent],

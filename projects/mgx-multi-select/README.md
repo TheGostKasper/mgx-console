@@ -1,11 +1,12 @@
 # MgxMultiSelect
 
-Angular multiselect dropdown component that easy to use  [github page](https://github.com/TheGostKasper/mgx-console/tree/master/projects/mgx-multi-select)
+Angular Select component that enables multi or single select with search , easy to use and it's lite  
+[github page](https://github.com/TheGostKasper/mgx-console/tree/master/projects/mgx-multi-select)
 
 ## Dependencies
 
-- @angular/material 
-- @angular/flex-layout
+- @angular/material (make sure you are using angular material theme )
+
 
 ## Usage
 Import MgxMultiSelectModule into your @NgModule.

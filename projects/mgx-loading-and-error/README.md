@@ -149,3 +149,13 @@ interface IPayload {
 ```
 - Easy to handle from the service once you init <br> `itemsConfig = new LoadingService<any>();`<br> `itemsConfig.payload= { // (add | update | delete) attrs } `
 
+## Keywords
+
+[angular 2](https://www.npmjs.com/search?q=keywords:angular%202)
+[loading](https://www.npmjs.com/search?q=keywords:loading)
+[loading error](https://www.npmjs.com/search?q=keywords:loading%20error)
+[spinning](https://www.npmjs.com/search?q=keywords:spinning)
+[progress](https://www.npmjs.com/search?q=keywords:progress)
+[progressbar](https://www.npmjs.com/search?q=keywords:progressbar)
+
+
