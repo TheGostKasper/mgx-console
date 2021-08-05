@@ -11,10 +11,19 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MgxMultiSelectComponent } from './mgx-multi-select.component';
+import {
+  MgxSelectViewComponent,
+  MgxSavedItemsViewComponent,
+} from './select-view/mgx-select-view.component';
 
 @NgModule({
-  declarations: [MgxMultiSelectComponent],
+  declarations: [
+    MgxMultiSelectComponent,
+    MgxSelectViewComponent,
+    MgxSavedItemsViewComponent,
+  ],
   imports: [
     CommonModule,
     BrowserModule,
@@ -27,6 +36,7 @@ import { MgxMultiSelectComponent } from './mgx-multi-select.component';
     MatTooltipModule,
     MatButtonModule,
     MatInputModule,
+    MatCheckboxModule,
   ],
   exports: [MgxMultiSelectComponent],
   entryComponents: [MgxMultiSelectComponent],

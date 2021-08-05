@@ -48,12 +48,13 @@
         class="u-border-bottom u-border-gray-primary300 search-container"
         *ngIf="isSearchable"
       >
-        <div
-          class=" flex flex__row flex__start u-bg-gray-primary100 u-padding-tiny"
-        >
-          <mat-icon class="u-text-gray-primary500" *ngIf="!searchItems.value"
-            >search</mat-icon
-          >
+        <div class="search-wrapper u-bg-gray-primary100 u-padding-tiny">
+          <mat-icon class="u-text-gray-primary500">search</mat-icon>
+          <!-- <mat-option
+            *ngIf="showSelectAll && isMultipleSelect"
+            (onSelectionChange)="selectAllChange($event)"
+            [value]="isSelectAll"
+          ></mat-option> -->
           <input
             class="u-margin-left-small no-border"
             autocomplete="off"
@@ -73,14 +74,13 @@
         </div>
       </div>
       <mat-divider></mat-divider>
-
       <div *ngIf="showSelectAll && isMultipleSelect">
-        <mat-option
-          class="option"
-          (onSelectionChange)="selectAllChange($event)"
-          [value]="isSelectAll"
-        >
-          Select All</mat-option
+        <mat-checkbox
+          class="select-all"
+          color="primary"
+          (change)="selectAllChange($event)"
+          [checked]="isSelectAll"
+          >Select All</mat-checkbox
         >
         <mat-divider></mat-divider>
       </div>
@@ -106,8 +106,6 @@
         [value]="item"
         class="option"
         (onSelectionChange)="selectionChange($event, item)"
-        [ngClass]="{ capitalize: capitalize }"
-        checked="true"
       >
         <ng-container
           [ngTemplateOutlet]="optionTemplateRef || defaultTemplate"
@@ -116,21 +114,45 @@
         </ng-container>
         <ng-template #defaultTemplate let-item>{{ item.name }}</ng-template>
       </mat-option>
+
       <mat-divider *ngIf="savedItems.length !== 0"></mat-divider>
-      <mat-option
-        *ngFor="let item of items"
-        [value]="item"
-        class="option"
-        (onSelectionChange)="selectionChange($event, item)"
-        [ngClass]="{ capitalize: capitalize }"
-      >
-        <ng-container
-          [ngTemplateOutlet]="optionTemplateRef || defaultTemplate"
-          [ngTemplateOutletContext]="{ $implicit: item }"
-        >
+      <ng-container *ngIf="isGrouped">
+        <ng-container *ngFor="let item of items">
+          <span
+            class="grouped-label"
+            *ngIf="!!item.subItems && item.subItems.length > 0"
+            >{{ item.name }}
+          </span>
+          <mat-option
+            *ngFor="let ele of item.subItems"
+            [value]="ele"
+            class="grouped-oprion"
+            (onSelectionChange)="selectionChange($event, ele)"
+          >
+            <ng-container
+              [ngTemplateOutlet]="optionTemplateRef || defaultTemplate"
+              [ngTemplateOutletContext]="{ $implicit: ele }"
+            >
+            </ng-container>
+            <ng-template #defaultTemplate let-ele>{{ ele.name }}</ng-template>
+          </mat-option>
         </ng-container>
-        <ng-template #defaultTemplate let-item>{{ item.name }}</ng-template>
-      </mat-option>
+      </ng-container>
+      <ng-container *ngIf="!isGrouped">
+        <mat-option
+          *ngFor="let item of items"
+          [value]="item"
+          class="option"
+          (onSelectionChange)="selectionChange($event, item)"
+        >
+          <ng-container
+            [ngTemplateOutlet]="optionTemplateRef || defaultTemplate"
+            [ngTemplateOutletContext]="{ $implicit: item }"
+          >
+          </ng-container>
+          <ng-template #defaultTemplate let-item>{{ item.name }}</ng-template>
+        </mat-option>
+      </ng-container>
     </div>
   </mat-select>
 </div>
